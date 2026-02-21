@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PhotoLand | Cinematic Automotive Photography</title>
+<title>PhotoLand | Automotive Photography</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -22,6 +22,8 @@ color:white;
 overflow-x:hidden;
 }
 
+/* ===== NAVBAR ===== */
+
 nav{
 position:fixed;
 width:100%;
@@ -32,7 +34,6 @@ align-items:center;
 background:rgba(0,0,0,0.5);
 backdrop-filter:blur(12px);
 z-index:1000;
-transition:0.4s;
 }
 
 nav h2{
@@ -55,6 +56,23 @@ transition:0.3s;
 nav a:hover{
 color:#ff2e00;
 }
+
+/* Hamburger */
+
+.menu-toggle{
+display:none;
+flex-direction:column;
+cursor:pointer;
+gap:5px;
+}
+
+.menu-toggle span{
+width:25px;
+height:3px;
+background:white;
+}
+
+/* ===== HERO ===== */
 
 header{
 height:100vh;
@@ -106,6 +124,8 @@ transition:0.4s;
 background:white;
 color:black;
 }
+
+/* ===== SECTIONS ===== */
 
 section{
 padding:120px 8%;
@@ -164,7 +184,7 @@ background:#111;
 opacity:0.6;
 }
 
-/* Lightbox */
+/* ===== LIGHTBOX ===== */
 
 .lightbox{
 position:fixed;
@@ -193,14 +213,72 @@ visibility:visible;
 opacity:1;
 }
 
+/* ===== ANIMATION ===== */
+
 @keyframes fadeUp{
 from{opacity:0;transform:translateY(40px);}
 to{opacity:1;transform:translateY(0);}
 }
 
-@media(max-width:768px){
-.hero h1{font-size:40px;}
-header{background-attachment:scroll;}
+/* ===== MOBILE ===== */
+
+@media (max-width:768px){
+
+nav{
+padding:15px 5%;
+}
+
+nav ul{
+position:absolute;
+top:70px;
+right:0;
+background:#000;
+flex-direction:column;
+width:200px;
+padding:20px;
+display:none;
+}
+
+nav ul.active{
+display:flex;
+}
+
+.menu-toggle{
+display:flex;
+}
+
+.hero h1{
+font-size:34px;
+line-height:1.2;
+}
+
+.hero p{
+font-size:15px;
+}
+
+header{
+height:85vh;
+background-attachment:scroll;
+padding:0 5%;
+}
+
+section{
+padding:80px 5%;
+}
+
+.section-title{
+font-size:28px;
+margin-bottom:40px;
+}
+
+.gallery{
+grid-template-columns:1fr;
+}
+
+.gallery img{
+height:260px;
+}
+
 }
 
 </style>
@@ -209,7 +287,14 @@ header{background-attachment:scroll;}
 
 <nav>
 <h2>PhotoLand</h2>
-<ul>
+
+<div class="menu-toggle" id="menu-toggle">
+<span></span>
+<span></span>
+<span></span>
+</div>
+
+<ul id="nav-links">
 <li><a href="#gallery">Galeri</a></li>
 <li><a href="#about">Hakkımda</a></li>
 <li><a href="#contact">İletişim</a></li>
@@ -261,17 +346,20 @@ header{background-attachment:scroll;}
 
 <script>
 
+/* Scroll Animation */
+
 const sections=document.querySelectorAll("section");
 
 window.addEventListener("scroll",()=>{
 sections.forEach(sec=>{
-const top=window.scrollY;
 const offset=sec.offsetTop-500;
-if(top>offset){
+if(window.scrollY>offset){
 sec.classList.add("active");
 }
 });
 });
+
+/* Lightbox */
 
 const galleryImages=document.querySelectorAll(".gallery img");
 const lightbox=document.getElementById("lightbox");
@@ -286,6 +374,15 @@ lightboxImg.src=img.src;
 
 lightbox.addEventListener("click",()=>{
 lightbox.classList.remove("active");
+});
+
+/* Mobile Menu */
+
+const menuToggle=document.getElementById("menu-toggle");
+const navLinks=document.getElementById("nav-links");
+
+menuToggle.addEventListener("click",()=>{
+navLinks.classList.toggle("active");
 });
 
 </script>
